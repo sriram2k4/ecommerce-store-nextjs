@@ -20,7 +20,7 @@ const addSchema = z.object({
   image: imageSchema.refine((file) => file.size > 0, 'Required'),
 });
 
-export async function addProduct(formData: FormData) {
+export async function addProduct(preState: unknown, formData: FormData) {
   const result = addSchema.safeParse(Object.fromEntries(formData.entries()));
   if (result.success === false) {
     return result.error.formErrors.fieldErrors;
@@ -48,6 +48,7 @@ export async function addProduct(formData: FormData) {
       imagePath: imagePath,
     },
   });
+
   revalidatePath('/');
   revalidatePath('/products');
   redirect('/admin/products');
