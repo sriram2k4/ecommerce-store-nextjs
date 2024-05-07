@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { addProduct } from '../../_actions/product';
 
 export function ProductForm() {
-  const [priceInCents, setPriceInCents] = useState<number>();
+  const [priceInCents, setPriceInCents] = useState<number>(0);
   return (
     <form action={addProduct} className='space-y-8'>
       <div className='space-y-2'>
