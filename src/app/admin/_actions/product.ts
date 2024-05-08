@@ -71,7 +71,7 @@ export async function updateProduct(
   const data = result.data;
   const product = await db.product.findUnique({ where: { id } });
 
-  if (product === null) return notFound();
+  if (product == null) return notFound();
 
   let filePath = product.filePath;
   if (data.file != null && data.file.size > 0) {
@@ -120,7 +120,7 @@ export async function toggleProductAvailability(
 
 export async function deleteProduct(id: string) {
   const product = await db.product.delete({ where: { id } });
-  if (product === null) return notFound();
+  if (product == null) return notFound();
   await fs.unlink(product.filePath);
   await fs.unlink(`public${product.imagePath}`);
 }
