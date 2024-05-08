@@ -101,9 +101,7 @@ async function ProductsTable() {
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <a download href={`/admin/products/${product.id}/edit`}>
-                      Edit
-                    </a>
+                    <a href={`/admin/products/${product.id}/edit`}>Edit</a>
                   </DropdownMenuItem>
                   <ActiveToggleDropdownItems
                     id={product.id}
