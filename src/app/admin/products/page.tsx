@@ -14,6 +14,12 @@ import {
 } from '@/components/ui/table';
 import { CheckCircle, MoreVertical, XCircle } from 'lucide-react';
 import { formatCurrency, formatNumber } from '@/lib/formatters';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
 
 export default function AdminProductsPage() {
   return (
@@ -59,10 +65,10 @@ async function ProductsTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {products.map((products) => (
-          <TableRow key={products.id}>
+        {products.map((product) => (
+          <TableRow key={product.id}>
             <TableCell>
-              {products.isAvailableForPurchase ? (
+              {product.isAvailableForPurchase ? (
                 <>
                   <span className='sr-only'>Available</span>
                   <CheckCircle />
@@ -74,12 +80,28 @@ async function ProductsTable() {
                 </>
               )}
             </TableCell>
-            <TableCell>{products.name}</TableCell>
-            <TableCell>{formatCurrency(products.priceInCents / 100)}</TableCell>
-            <TableCell>{formatNumber(products._count.Order)}</TableCell>
+            <TableCell>{product.name}</TableCell>
+            <TableCell>{formatCurrency(product.priceInCents / 100)}</TableCell>
+            <TableCell>{formatNumber(product._count.Order)}</TableCell>
             <TableCell>
-              <MoreVertical />
-              <span className='sr-only'>Actions</span>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <MoreVertical />
+                  <span className='sr-only'>Actions</span>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem asChild>
+                    <a download href={`/admin/products/${product.id}/download`}>
+                      Download
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <a download href={`/admin/products/${product.id}/edit`}>
+                      Edit
+                    </a>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </TableCell>
           </TableRow>
         ))}
