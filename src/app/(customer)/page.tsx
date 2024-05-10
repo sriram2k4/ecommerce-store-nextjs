@@ -5,26 +5,27 @@ import { Product } from '@prisma/client';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { cache } from '@/lib/cache';
 
-async function getMostPopularProducts() {
-  return await db.product.findMany({
-    where: { isAvailableForPurchase: true },
-    orderBy: { orders: { _count: 'desc' } },
-    take: 6,
-  });
-}
+const getMostPopularProducts = cache(
+  () => {
+    return db.product.findMany({
+      where: { isAvailableForPurchase: true },
+      orderBy: { orders: { _count: 'desc' } },
+      take: 6,
+    });
+  },
+  ['/', 'getMostPopularProducts'],
+  { revalidate: 60 * 60 * 24 }
+);
 
-async function getNewestProducts() {
-  return await db.product.findMany({
+const getNewestProducts = cache(() => {
+  return db.product.findMany({
     where: { isAvailableForPurchase: true },
     orderBy: { createdAt: 'desc' },
     take: 6,
   });
-}
-
-// function wait(time: number) {
-//   return new Promise((resolve) => setTimeout(resolve, time));
-// }
+}, ['/', 'getNewestProducts']);
 
 type ProductGridSectionProps = {
   title: string;
