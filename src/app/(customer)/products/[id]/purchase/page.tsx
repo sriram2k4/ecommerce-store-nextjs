@@ -18,8 +18,13 @@ export default async function PurchasePage({
 
   const paymentIntent = await stripe.paymentIntents.create({
     amount: product.priceInCents,
-    currency: 'USD',
+    currency: 'INR',
     metadata: { productId: product.id },
+    payment_method_options: {
+      card: {
+        request_three_d_secure: 'any',
+      },
+    },
   });
 
   if (paymentIntent.client_secret == null) {
