@@ -85,13 +85,13 @@ function Form({
     if (stripe == null || elements == null || email == null) return;
     setIsLoading(true);
 
-    // const orderExists = await userOrderExists(email, productId);
+    const orderExists = await userOrderExists(email, productId);
 
-    // if (orderExists) {
-    //   setErrorMessage(
-    //     'You have already purchased this product. Try downloading it from the My Orders page'
-    //   );
-    // }
+    if (orderExists) {
+      setErrorMessage(
+        'You have already purchased this product. Try downloading it from the My Orders page'
+      );
+    }
 
     stripe
       .confirmPayment({

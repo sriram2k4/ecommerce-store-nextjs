@@ -37,4 +37,8 @@ next-env.d.ts
 
 /products
 /public/products
-.env
+# Ignore all .env files
+*.env
+
+# Ignore all files with .env. prefix
+.env.*
