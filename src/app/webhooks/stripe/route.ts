@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
         id: productId,
       },
     });
+
     if (product == null || email == null) {
       return new NextResponse('Bad Request', { status: 400 });
     }
@@ -34,7 +35,7 @@ export async function POST(req: NextRequest) {
       orders: { create: { productId, pricepaidInCents } },
     };
 
-    db.user.upsert({
+    await db.user.upsert({
       where: { email },
       create: userFields,
       update: userFields,
