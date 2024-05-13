@@ -34,7 +34,16 @@ function getUsers() {
   });
 }
 
-export default async function UsersTable() {
+export default function UsersPage() {
+  return (
+    <>
+      <PageHeader>Customers</PageHeader>
+      <UsersTable />
+    </>
+  );
+}
+
+async function UsersTable() {
   const users = await getUsers();
 
   if (users.length === 0) return <p>No Customers Found</p>;
